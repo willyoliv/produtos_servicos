@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:produtos_servicos/controllers/AppController.dart';
 import 'package:produtos_servicos/models/enums/operacao.dart';
-import 'package:produtos_servicos/models/funcionario.dart';
 import 'package:produtos_servicos/pages/form_page.dart';
+import 'package:produtos_servicos/widgets/lista_funcionarios_widget.dart';
 
 class Homepage extends StatelessWidget {
   final controller = Get.put(AppController());
@@ -19,10 +19,11 @@ class Homepage extends StatelessWidget {
           title: const Text("Funcionários"),
           actions: [
             IconButton(
+              splashRadius: 20,
               onPressed: () {
-                Get.to(FormPage(tipoOperacao: TipoOperacao.SALVAR));
+                Get.to(const FormPage(tipoOperacao: TipoOperacao.SALVAR));
               },
-              icon: const Icon(Icons.add),
+              icon: const Icon(Icons.person_add),
             ),
           ],
           bottom: const TabBar(
@@ -33,54 +34,14 @@ class Homepage extends StatelessWidget {
           ),
         ),
         body: TabBarView(
+          physics: const BouncingScrollPhysics(),
           children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.all(10),
-              child: GetX<AppController>(builder: (controller) {
-                return ListView.builder(
-                    itemCount: controller.funcionarios.length,
-                    itemBuilder: (context, index) {
-                      Funcionario funcionario = controller.funcionarios[index];
-                      return SizedBox(
-                        height: 80,
-                        child: Card(
-                          child: ListTile(
-                            title: Text(funcionario.nome),
-                            subtitle: Text(funcionario.cargo),
-                            trailing: PopupMenuButton(
-                              itemBuilder: (context) {
-                                return [
-                                  const PopupMenuItem(
-                                    value: 'editar',
-                                    child: Text('Editar'),
-                                  ),
-                                  const PopupMenuItem(
-                                    value: 'deletar',
-                                    child: Text('Deletar'),
-                                  )
-                                ];
-                              },
-                              onSelected: (String value) {
-                                if (value == 'editar') {
-                                  Get.to(
-                                    FormPage(
-                                      tipoOperacao: TipoOperacao.EDITAR,
-                                      funcionario: funcionario,
-                                    ),
-                                  );
-                                } else {
-                                  controller.deleteFuncionario(funcionario.id);
-                                }
-                              },
-                            ),
-                          ),
-                        ),
-                      );
-                    });
-              }),
+            ListaFuncionariosWidget(
+              isFuncionariosAtivos: true,
             ),
-            Container()
+            ListaFuncionariosWidget(
+              isFuncionariosAtivos: false,
+            ),
           ],
         ),
       ),

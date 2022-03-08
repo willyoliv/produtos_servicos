@@ -48,4 +48,10 @@ class Funcionario {
   set nome(String value) {
     _nome = value;
   }
+
+  set isFuncionarioAtivo(bool value) {
+    _isFuncionarioAtivo = value;
+  }
+
+  bool get isFuncionarioAtivo => _isFuncionarioAtivo;
 }

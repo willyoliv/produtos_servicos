@@ -19,7 +19,6 @@ class FormPage extends StatefulWidget {
 class _FormPageState extends State<FormPage> {
   final _form = GlobalKey<FormState>();
 
-  // final _nomeFocusNode = FocusNode();
   final _dataNascimentoFocusNode = FocusNode();
 
   final _dataContratacaoFocusNode = FocusNode();
@@ -61,9 +60,12 @@ class _FormPageState extends State<FormPage> {
       _dataNascimentoFocusNode.unfocus();
       _dataContratacaoController.clear();
       _dataContratacaoFocusNode.unfocus();
+      Get.snackbar('Cadastro realizado.', 'Funcionário cadastrado com sucesso',
+          snackPosition: SnackPosition.BOTTOM);
     } else {
-      controller.updateFuncionario(_formData, widget.funcionario!.id);
-      Get.back();
+      controller.updateFuncionario(_formData, widget.funcionario!);
+      Get.snackbar('Cadastro atualizado.', 'Funcionário atualizado com sucesso',
+          snackPosition: SnackPosition.BOTTOM);
     }
   }
 
@@ -95,13 +97,20 @@ class _FormPageState extends State<FormPage> {
       appBar: AppBar(
         title: Text(
             "${widget.tipoOperacao == TipoOperacao.SALVAR ? 'Cadastrar' : 'Atualizar'} Funcionário"),
-        actions: [IconButton(onPressed: _submit, icon: const Icon(Icons.save))],
+        actions: [
+          IconButton(
+            splashRadius: 20,
+            onPressed: _submit,
+            icon: const Icon(Icons.save),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Form(
           key: _form,
           child: ListView(
+            physics: const BouncingScrollPhysics(),
             children: [
               TextFormField(
                 initialValue: _formData['nome'],
@@ -129,7 +138,6 @@ class _FormPageState extends State<FormPage> {
               ),
               const SizedBox(height: 15),
               TextFormField(
-                // initialValue: _formData['nome'],
                 style: TextStyle(
                     color: Theme.of(context).primaryColor, fontSize: 20),
                 decoration: const InputDecoration(
@@ -159,7 +167,6 @@ class _FormPageState extends State<FormPage> {
                   });
                   // _dataNascimentoFocusNode.unfocus();
                 },
-                // onSaved: (value) => _formData['dataNascimento'] = value!,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Escolha a data de nascimento!';
@@ -198,7 +205,6 @@ class _FormPageState extends State<FormPage> {
                   });
                   // _dataContratacaoFocusNode.unfocus();
                 },
-                // onSaved: (value) => _formData['dataContratacao'] = value!,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Informe a data de contratacao!';
@@ -265,30 +271,9 @@ class _FormPageState extends State<FormPage> {
                   if (value == null) {
                     return 'Selecione um Setor!';
                   }
-
                   return null;
                 },
               ),
-
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     ElevatedButton(
-              //       child: const Text("Salvar",
-              //           style: TextStyle(color: Colors.white, fontSize: 18)),
-              //       style: ElevatedButton.styleFrom(
-              //         fixedSize: const Size(130, 50),
-              //         shape: RoundedRectangleBorder(
-              //           borderRadius: BorderRadius.circular(30.0),
-              //         ),
-              //       ),
-              //       onPressed: () {
-              //         _form.currentState!.save();
-              //         print(_formData);
-              //       },
-              //     ),
-              //   ],
-              // ),
             ],
           ),
         ),
