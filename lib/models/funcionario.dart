@@ -1,19 +1,23 @@
 class Funcionario {
+  int _id;
   String _nome;
   String _cargo;
   String _setor;
   DateTime _dataNascimento;
   DateTime _dataContratacao;
   late DateTime _dataDesligamento;
+  bool _isFuncionarioAtivo = true;
 
-  Funcionario(this._nome, this._cargo, this._setor, this._dataNascimento,
-      this._dataContratacao);
+  Funcionario(this._id, this._nome, this._cargo, this._setor,
+      this._dataNascimento, this._dataContratacao);
 
   DateTime get dataDesligamento => _dataDesligamento;
 
   set dataDesligamento(DateTime value) {
     _dataDesligamento = value;
   }
+
+  int get id => _id;
 
   DateTime get dataContratacao => _dataContratacao;
 

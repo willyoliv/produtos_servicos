@@ -2,19 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:produtos_servicos/controllers/AppController.dart';
+import 'package:produtos_servicos/models/enums/operacao.dart';
+import 'package:produtos_servicos/models/funcionario.dart';
 
-class FormPage extends StatelessWidget {
+class FormPage extends StatefulWidget {
+  final TipoOperacao tipoOperacao;
+  final Funcionario? funcionario;
+
+  const FormPage({Key? key, required this.tipoOperacao, this.funcionario})
+      : super(key: key);
+
+  @override
+  State<FormPage> createState() => _FormPageState();
+}
+
+class _FormPageState extends State<FormPage> {
   final _form = GlobalKey<FormState>();
+
   // final _nomeFocusNode = FocusNode();
   final _dataNascimentoFocusNode = FocusNode();
+
   final _dataContratacaoFocusNode = FocusNode();
+
   final _dataNascimentoController = TextEditingController();
+
   final _dataContratacaoController = TextEditingController();
+
   final _formData = <String, String>{};
 
   final controller = Get.put(AppController());
-
-  FormPage({Key? key}) : super(key: key);
 
   Future<DateTime?> _selecionarDataNascimento(
       BuildContext context, DateTime firstDate, DateTime lastDate) async {
@@ -38,19 +54,47 @@ class FormPage extends StatelessWidget {
     }
 
     _form.currentState!.save();
-    controller.addFuncionario(_formData);
-    _form.currentState!.reset();
-    _dataNascimentoController.clear();
-    _dataNascimentoFocusNode.unfocus();
-    _dataContratacaoFocusNode.unfocus();
-    _dataContratacaoController.clear();
+    if (widget.tipoOperacao == TipoOperacao.SALVAR) {
+      controller.addFuncionario(_formData);
+      _form.currentState!.reset();
+      _dataNascimentoController.clear();
+      _dataNascimentoFocusNode.unfocus();
+      _dataContratacaoController.clear();
+      _dataContratacaoFocusNode.unfocus();
+    } else {
+      controller.updateFuncionario(_formData, widget.funcionario!.id);
+      Get.back();
+    }
+  }
+
+  void preencherFormularioParaEdicao() {
+    if (widget.tipoOperacao == TipoOperacao.EDITAR) {
+      _formData['nome'] = widget.funcionario!.nome;
+      _formData['dataNascimento'] =
+          widget.funcionario!.dataNascimento.toString();
+      _formData['dataContratacao'] =
+          widget.funcionario!.dataContratacao.toString();
+      _formData['cargo'] = widget.funcionario!.cargo;
+      _formData['setor'] = widget.funcionario!.setor;
+      _dataNascimentoController.text =
+          DateFormat('dd/MM/yyyy').format(widget.funcionario!.dataNascimento);
+      _dataContratacaoController.text =
+          DateFormat('dd/MM/yyyy').format(widget.funcionario!.dataContratacao);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    preencherFormularioParaEdicao();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Cadastrar Funcionário"),
+        title: Text(
+            "${widget.tipoOperacao == TipoOperacao.SALVAR ? 'Cadastrar' : 'Atualizar'} Funcionário"),
         actions: [IconButton(onPressed: _submit, icon: const Icon(Icons.save))],
       ),
       body: Padding(
@@ -60,6 +104,7 @@ class FormPage extends StatelessWidget {
           child: ListView(
             children: [
               TextFormField(
+                initialValue: _formData['nome'],
                 style: TextStyle(
                     color: Theme.of(context).primaryColor, fontSize: 20),
                 decoration: const InputDecoration(
@@ -70,10 +115,6 @@ class FormPage extends StatelessWidget {
                       color: Colors.grey,
                       fontWeight: FontWeight.w400),
                 ),
-                // textInputAction: TextInputAction.next,
-                // onFieldSubmitted: (_) {
-                //   FocusScope.of(context).requestFocus(_dataNascimentoFocusNode);
-                // },
                 onSaved: (value) => _formData['nome'] = value!,
                 validator: (value) {
                   bool isEmpty = value!.trim().isEmpty;
@@ -88,6 +129,7 @@ class FormPage extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               TextFormField(
+                // initialValue: _formData['nome'],
                 style: TextStyle(
                     color: Theme.of(context).primaryColor, fontSize: 20),
                 decoration: const InputDecoration(
@@ -103,9 +145,6 @@ class FormPage extends StatelessWidget {
                   ),
                 ),
                 textInputAction: TextInputAction.next,
-                // onFieldSubmitted: (_) {
-                //   FocusScope.of(context).requestFocus(_dataNascimentoFocusNode);
-                // },
                 controller: _dataNascimentoController,
                 focusNode: _dataNascimentoFocusNode,
                 readOnly: true,
@@ -170,7 +209,7 @@ class FormPage extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               DropdownButtonFormField<String>(
-                value: _formData['Cargo'],
+                value: _formData['cargo'],
                 style: TextStyle(
                     color: Theme.of(context).primaryColor, fontSize: 20),
                 decoration: const InputDecoration(
@@ -201,6 +240,7 @@ class FormPage extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               DropdownButtonFormField<String>(
+                value: _formData['setor'],
                 style: TextStyle(
                     color: Theme.of(context).primaryColor, fontSize: 20),
                 decoration: const InputDecoration(
