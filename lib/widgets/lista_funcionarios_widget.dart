@@ -73,8 +73,10 @@ class ListaFuncionariosWidget extends StatelessWidget {
                                       ),
                                     ),
                                     onPressed: () {
+                                      // appController
+                                      //     .deleteFuncionario(funcionario);
                                       appController
-                                          .deleteFuncionario(funcionario);
+                                          .deletarFuncionario(funcionario);
                                       Get.back();
                                     },
                                     child: const Text("Confirmar"),

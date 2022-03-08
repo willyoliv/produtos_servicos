@@ -54,7 +54,7 @@ class _FormPageState extends State<FormPage> {
 
     _form.currentState!.save();
     if (widget.tipoOperacao == TipoOperacao.SALVAR) {
-      controller.addFuncionario(_formData);
+      controller.criarFuncionario(_formData);
       _form.currentState!.reset();
       _dataNascimentoController.clear();
       _dataNascimentoFocusNode.unfocus();
@@ -63,7 +63,7 @@ class _FormPageState extends State<FormPage> {
       Get.snackbar('Cadastro realizado.', 'Funcionário cadastrado com sucesso',
           snackPosition: SnackPosition.BOTTOM);
     } else {
-      controller.updateFuncionario(_formData, widget.funcionario!);
+      controller.atualizarFuncionario(_formData, widget.funcionario!);
       Get.snackbar('Cadastro atualizado.', 'Funcionário atualizado com sucesso',
           snackPosition: SnackPosition.BOTTOM);
     }

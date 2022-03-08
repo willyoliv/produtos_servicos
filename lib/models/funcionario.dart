@@ -1,57 +1,73 @@
+import 'dart:convert';
+
 class Funcionario {
-  int _id;
-  String _nome;
-  String _cargo;
-  String _setor;
-  DateTime _dataNascimento;
-  DateTime _dataContratacao;
-  late DateTime _dataDesligamento;
-  bool _isFuncionarioAtivo = true;
+  int? id;
+  String nome;
+  String cargo;
+  String setor;
+  DateTime dataNascimento;
+  DateTime dataContratacao;
+  DateTime dataDesligamento;
+  bool isFuncionarioAtivo;
+  Funcionario({
+    this.id,
+    required this.nome,
+    required this.cargo,
+    required this.setor,
+    required this.dataNascimento,
+    required this.dataContratacao,
+    required this.dataDesligamento,
+    required this.isFuncionarioAtivo,
+  });
 
-  Funcionario(this._id, this._nome, this._cargo, this._setor,
-      this._dataNascimento, this._dataContratacao);
-
-  DateTime get dataDesligamento => _dataDesligamento;
-
-  set dataDesligamento(DateTime value) {
-    _dataDesligamento = value;
+  Funcionario copyWith({
+    int? id,
+    String? nome,
+    String? cargo,
+    String? setor,
+    DateTime? dataNascimento,
+    DateTime? dataContratacao,
+    DateTime? dataDesligamento,
+    bool? isFuncionarioAtivo,
+  }) {
+    return Funcionario(
+      id: id ?? this.id,
+      nome: nome ?? this.nome,
+      cargo: cargo ?? this.cargo,
+      setor: setor ?? this.setor,
+      dataNascimento: dataNascimento ?? this.dataNascimento,
+      dataContratacao: dataContratacao ?? this.dataContratacao,
+      dataDesligamento: dataDesligamento ?? this.dataDesligamento,
+      isFuncionarioAtivo: isFuncionarioAtivo ?? this.isFuncionarioAtivo,
+    );
   }
 
-  int get id => _id;
-
-  DateTime get dataContratacao => _dataContratacao;
-
-  set dataContratacao(DateTime value) {
-    _dataContratacao = value;
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'nome': nome,
+      'cargo': cargo,
+      'setor': setor,
+      'dataNascimento': dataNascimento.millisecondsSinceEpoch,
+      'dataContratacao': dataContratacao.millisecondsSinceEpoch,
+      'dataDesligamento': dataDesligamento.millisecondsSinceEpoch,
+      'isFuncionarioAtivo': isFuncionarioAtivo == true ? 1 : 0,
+    };
   }
 
-  DateTime get dataNascimento => _dataNascimento;
-
-  set dataNascimento(DateTime value) {
-    _dataNascimento = value;
+  factory Funcionario.fromMap(Map<String, dynamic> map) {
+    return Funcionario(
+      id: map['id']?.toInt() ?? 0,
+      nome: map['nome'] ?? '',
+      cargo: map['cargo'] ?? '',
+      setor: map['setor'] ?? '',
+      dataNascimento:
+          DateTime.fromMillisecondsSinceEpoch(map['dataNascimento']),
+      dataContratacao:
+          DateTime.fromMillisecondsSinceEpoch(map['dataContratacao']),
+      dataDesligamento:
+          DateTime.fromMillisecondsSinceEpoch(map['dataDesligamento']),
+      isFuncionarioAtivo: map['isFuncionarioAtivo'] == 1 ? true : false,
+    );
   }
-
-  String get setor => _setor;
-
-  set setor(String value) {
-    _setor = value;
-  }
-
-  String get cargo => _cargo;
-
-  set cargo(String value) {
-    _cargo = value;
-  }
-
-  String get nome => _nome;
-
-  set nome(String value) {
-    _nome = value;
-  }
-
-  set isFuncionarioAtivo(bool value) {
-    _isFuncionarioAtivo = value;
-  }
-
-  bool get isFuncionarioAtivo => _isFuncionarioAtivo;
 }

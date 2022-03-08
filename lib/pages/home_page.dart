@@ -5,10 +5,26 @@ import 'package:produtos_servicos/models/enums/operacao.dart';
 import 'package:produtos_servicos/pages/form_page.dart';
 import 'package:produtos_servicos/widgets/lista_funcionarios_widget.dart';
 
-class Homepage extends StatelessWidget {
+class Homepage extends StatefulWidget {
+  Homepage({Key? key}) : super(key: key);
+
+  @override
+  State<Homepage> createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
   final controller = Get.put(AppController());
 
-  Homepage({Key? key}) : super(key: key);
+  @override
+  void initState() {
+    super.initState();
+    carregarDados();
+  }
+
+  void carregarDados() async {
+    await controller.start();
+    controller.update();
+  }
 
   @override
   Widget build(BuildContext context) {
