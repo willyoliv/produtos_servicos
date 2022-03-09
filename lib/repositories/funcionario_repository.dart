@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:produtos_servicos/db/app_database.dart';
 import 'package:produtos_servicos/models/funcionario.dart';
 
@@ -11,12 +10,12 @@ class FuncionarioRepository {
     return funcionario.copyWith(id: id);
   }
 
-  Future<RxList<Funcionario>> getAll() async {
+  Future<List<Funcionario>> getAll() async {
     final db = await AppDatabase.instance.database;
 
     final result = await db.query('funcionarios');
 
-    return RxList.of(result.map((json) => Funcionario.fromMap(json)).toList());
+    return result.map((json) => Funcionario.fromMap(json)).toList();
   }
 
   Future<int> update(Funcionario funcionario) async {

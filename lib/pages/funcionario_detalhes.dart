@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:produtos_servicos/controllers/AppController.dart';
+import 'package:produtos_servicos/controllers/app_controller.dart';
 import 'package:produtos_servicos/models/funcionario.dart';
 
 class FuncionarioDetalhes extends StatelessWidget {

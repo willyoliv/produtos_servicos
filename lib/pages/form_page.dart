@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:produtos_servicos/controllers/AppController.dart';
+import 'package:produtos_servicos/controllers/app_controller.dart';
 import 'package:produtos_servicos/models/enums/operacao.dart';
 import 'package:produtos_servicos/models/funcionario.dart';
 
@@ -46,6 +46,7 @@ class _FormPageState extends State<FormPage> {
   }
 
   void _submit() {
+    // FocusScope.of(context).unfocus();
     var isValid = _form.currentState!.validate();
 
     if (!isValid) {
@@ -165,7 +166,6 @@ class _FormPageState extends State<FormPage> {
                         DateFormat('dd/MM/yyyy').format(value);
                     _dataNascimentoController.text = dataNascimento;
                   });
-                  // _dataNascimentoFocusNode.unfocus();
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -203,7 +203,6 @@ class _FormPageState extends State<FormPage> {
                         DateFormat('dd/MM/yyyy').format(value);
                     _dataContratacaoController.text = dataContratacao;
                   });
-                  // _dataContratacaoFocusNode.unfocus();
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
