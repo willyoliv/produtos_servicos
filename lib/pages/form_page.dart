@@ -54,7 +54,7 @@ class _FormPageState extends State<FormPage> {
     }
 
     _form.currentState!.save();
-    if (widget.tipoOperacao == TipoOperacao.SALVAR) {
+    if (widget.tipoOperacao == TipoOperacao.salvar) {
       controller.criarFuncionario(_formData);
       _form.currentState!.reset();
       _dataNascimentoController.clear();
@@ -71,7 +71,7 @@ class _FormPageState extends State<FormPage> {
   }
 
   void preencherFormularioParaEdicao() {
-    if (widget.tipoOperacao == TipoOperacao.EDITAR) {
+    if (widget.tipoOperacao == TipoOperacao.editar) {
       _formData['nome'] = widget.funcionario!.nome;
       _formData['dataNascimento'] =
           widget.funcionario!.dataNascimento.toString();
@@ -97,7 +97,7 @@ class _FormPageState extends State<FormPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            "${widget.tipoOperacao == TipoOperacao.SALVAR ? 'Cadastrar' : 'Atualizar'} Funcionário"),
+            "${widget.tipoOperacao == TipoOperacao.salvar ? 'Cadastrar' : 'Atualizar'} Funcionário"),
         actions: [
           IconButton(
             splashRadius: 20,

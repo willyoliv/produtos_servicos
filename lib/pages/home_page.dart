@@ -17,7 +17,7 @@ class Homepage extends StatelessWidget {
             IconButton(
               splashRadius: 20,
               onPressed: () {
-                Get.to(const FormPage(tipoOperacao: TipoOperacao.SALVAR));
+                Get.to(const FormPage(tipoOperacao: TipoOperacao.salvar));
               },
               icon: const Icon(Icons.person_add),
             ),

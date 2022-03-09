@@ -56,7 +56,7 @@ class ListaFuncionariosWidget extends GetView<AppController> {
                                 if (value == 'editar') {
                                   Get.to(
                                     FormPage(
-                                      tipoOperacao: TipoOperacao.EDITAR,
+                                      tipoOperacao: TipoOperacao.editar,
                                       funcionario: funcionario,
                                     ),
                                   );

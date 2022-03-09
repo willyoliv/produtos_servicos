@@ -1,1 +1,1 @@
-enum TipoOperacao { SALVAR, EDITAR }
+enum TipoOperacao { salvar, editar }
