@@ -1,6 +1,6 @@
 # Teste de Conhecimentos Desenvolvedor Flutter (Junior) - Beabá Produtos e Serviços LTDA
 
-![badge](https://img.shields.io/github/languages/top/willyoliv/cobras_escadas)
+![badge](https://img.shields.io/github/languages/top/willyoliv/produtos_servicos)
 <img alt="Flutter" src="https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white" />
 
 Tabela de conteúdos
